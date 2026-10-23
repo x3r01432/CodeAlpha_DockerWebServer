@@ -59,14 +59,8 @@ codealpha-web  | 172.18.0.1 - - [23/Oct/2026:21:42:21 +0000] "GET / HTTP/1.1" 20
 5. (10 s) `make inspect` and `make logs` to show health, limits and access logs.
 6. (10 s) Show the green GitHub Actions run. "Thanks @CodeAlpha #DevOps #Docker"
 
-## Enabling CI
-The workflow lives in `ci/ci.yml` because the token used to publish this repo has no `workflow` scope, and GitHub rejects pushes to `.github/workflows/` without it. To switch it on:
-```bash
-gh auth refresh -s workflow        # one-time, in your browser
-mkdir -p .github/workflows && git mv ci/ci.yml .github/workflows/ci.yml
-git commit -m "Enable GitHub Actions CI" && git push
-```
-The same steps it runs (`docker compose build`, `up -d`, `scripts/smoke-test.sh`) were run locally and passed (see Proof).
+## CI
+The workflow runs on every push and pull request. The same steps it runs (`docker compose build`, `up -d`, `scripts/smoke-test.sh`) were run locally and passed (see Proof).
 
 ## License
 MIT © 2026 Steven Rios
