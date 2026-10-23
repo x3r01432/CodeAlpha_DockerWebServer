@@ -1,5 +1,7 @@
 # CodeAlpha_DockerWebServer
 
+[![CI](https://github.com/x3r01432/CodeAlpha_DockerWebServer/actions/workflows/ci.yml/badge.svg)](https://github.com/x3r01432/CodeAlpha_DockerWebServer/actions/workflows/ci.yml)
+
 CodeAlpha DevOps Internship, **Task 4: Docker web server**. A static website served by Nginx in a hardened Docker container, with lifecycle scripts, a troubleshooting guide and GitHub Actions CI that builds and smoke-tests the container.
 
 ## Architecture
@@ -20,7 +22,7 @@ Hardening: non-root user, read-only root filesystem (tmpfs `/tmp`), all Linux ca
 - `Makefile` – `build run stop restart logs inspect health smoke clean`
 - `scripts/smoke-test.sh`, `scripts/inspect.sh`
 - `TROUBLESHOOTING.md`
-- `ci/ci.yml` – GitHub Actions workflow: build + smoke test on every push (see *Enabling CI* below)
+- `.github/workflows/ci.yml` – GitHub Actions workflow: build + smoke test on every push
 
 ## Run it
 Requires Docker with Compose v2.
