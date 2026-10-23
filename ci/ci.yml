@@ -1,0 +1,22 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker compose build
+      - name: Start container
+        run: docker compose up -d
+      - name: Smoke test
+        run: ./scripts/smoke-test.sh
+      - name: Inspect
+        if: always()
+        run: ./scripts/inspect.sh || true
+      - name: Logs
+        if: always()
+        run: docker compose logs
+      - name: Stop
+        if: always()
+        run: docker compose down

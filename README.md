@@ -20,7 +20,7 @@ Hardening: non-root user, read-only root filesystem (tmpfs `/tmp`), all Linux ca
 - `Makefile` – `build run stop restart logs inspect health smoke clean`
 - `scripts/smoke-test.sh`, `scripts/inspect.sh`
 - `TROUBLESHOOTING.md`
-- `.github/workflows/ci.yml` – build + smoke test on every push
+- `ci/ci.yml` – GitHub Actions workflow: build + smoke test on every push (see *Enabling CI* below)
 
 ## Run it
 Requires Docker with Compose v2.
@@ -56,6 +56,15 @@ codealpha-web  | 172.18.0.1 - - [23/Oct/2026:21:42:21 +0000] "GET / HTTP/1.1" 20
 4. (20 s) Terminal: `make build run smoke` and show `SMOKE TEST PASSED`; open localhost:8080 in the browser.
 5. (10 s) `make inspect` and `make logs` to show health, limits and access logs.
 6. (10 s) Show the green GitHub Actions run. "Thanks @CodeAlpha #DevOps #Docker"
+
+## Enabling CI
+The workflow lives in `ci/ci.yml` because the token used to publish this repo has no `workflow` scope, and GitHub rejects pushes to `.github/workflows/` without it. To switch it on:
+```bash
+gh auth refresh -s workflow        # one-time, in your browser
+mkdir -p .github/workflows && git mv ci/ci.yml .github/workflows/ci.yml
+git commit -m "Enable GitHub Actions CI" && git push
+```
+The same steps it runs (`docker compose build`, `up -d`, `scripts/smoke-test.sh`) were run locally and passed (see Proof).
 
 ## License
 MIT © 2026 Steven Rios
